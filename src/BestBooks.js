@@ -11,69 +11,57 @@ class BestBooks extends React.Component {
       errorMessage: "",
     };
   }
-  getBooks = async() => {
+
+  getBooks = async () => {
+    let url = `${SERVER}/books`;
+    // console.log(url)
+
     try {
-     let results = await axios.get(`${SERVER}/books`);
-     console.log(results.data)
-     this.setState = {
-      books: results.data,
-     }
+      let results = await axios.get(url);
+      console.log(results.data);
+      this.setState = {
+        books: results.data,
+      };
     } catch (error) {
-      console.log('Error ocurred: ', error.response.data)
+      console.log("Error ocurred: ", error.response.data);
     }
-  }
+  };
 
-  componentDidMount(){
+  componentDidMount() {
     this.getBooks();
+    console.log("books", this.state.books);
   }
 
-  //WHY AM I NOT GETTING BOOK DATA WHEN I GO TO THE BOOKS ROUTE?
+  //WHY AM I NOT RENDERING BOOK DATA?
+
   // Backend: http://localhost:3001/books
-  // Frontend: http://localhost:3000/books
+
   render() {
-    // this.getBooks();
-    let allBooks = this.state.books.map((book) => (
-      <p key={book._id}>
-        {book.title} {book.description} {book.status}
-      </p>
-    ));
+    console.log("state", this.state);
 
     return (
       <>
         <h2>My Book Shelf</h2>
 
-        {this.state.books.length ?
-         <>{allBooks}</>
-        :
-        <p>no books found</p>
-        }
+        <div>
+          {this.state.books.length > 0 ? (
+            <div>
+              {this.state.books.map((eachBook, idx) => (
+                // console.log(book);
+                <div key={idx}>
+                  <p>{eachBook.title}</p>
+                  <p>{eachBook.description}</p>
+                  <p>{eachBook.status}</p>
+                </div>
+              ))};
+            </div>
+          ) : (
+            <p>no books found</p>
+          )}
+        </div>
       </>
     );
   }
 }
 
 export default BestBooks;
-
-// getBooks = async () => {
-//   try {
-//     const config = {
-//       method: "get",
-//       baseUrl: process.env.REACT_APP_SERVER,
-//       url: "/books",
-//     };
-
-//     const results = await axios.get(config);
-//     this.setState({
-//       books: results.data,
-//     });
-//   } catch (error) {
-//     console.log("componentDidMount error occurred", error);
-//     this.setState({
-//       errorMessage: `Status code: ${error.response.status}: ${error.response.data}`,
-//     });
-//   }
-// };
-
-// componentDidMount(){
-//   this.getBooks();
-// }
