@@ -1,7 +1,8 @@
 import React from "react";
 import axios from "axios";
+import Carousel from 'react-bootstrap/Carousel';
+import bookImg from './book.jpeg'
 
-// let SERVER = process.env.REACT_APP_SERVER;
 
 class BestBooks extends React.Component {
   constructor(props) {
@@ -14,11 +15,9 @@ class BestBooks extends React.Component {
 
   getBooks = async () => {
     let url = `${process.env.REACT_APP_SERVER}/books`;
-    console.log('url: ', url)
 
     try {
       let results = await axios.get(url);
-      console.log('axios results: ', results.data);
       this.setState({
         books: results.data,
       });
@@ -29,37 +28,40 @@ class BestBooks extends React.Component {
 
   componentDidMount() {
     this.getBooks();
-    console.log('books after componentDidMount: ', this.state.books);
-    console.log("books", this.state.books);
   }
 
-  //WHY AM I NOT RENDERING BOOK DATA?
-
-  // Backend: http://localhost:3001/books
-
   render() {
-    console.log("state of books", this.state);
 
     return (
       <>
         <h2>My Book Shelf</h2>
-
-        <div>
-          {this.state.books.length > 0 ? (
+        
+          {this.state.books.length > 0 ? 
+          (
             <div>
-              {this.state.books.map((eachBook, idx) => (
-                // console.log(eachBook);
-                <div key={idx}>
-                  <p>{eachBook.title}</p>
-                  <p>{eachBook.description}</p>
-                  <p>{eachBook.status}</p>
-                </div>
-              ))};
+              <Carousel id="carousel" variant="dark">
+              {this.state.books.map((eachBook) => (
+                  <Carousel.Item>
+                    <div key={eachBook._id}>
+                      <img id="carousel-image"
+                        src={bookImg}
+                        alt={eachBook.title}
+                        height= "700px"
+                      />
+                      <Carousel.Caption id="carousel-text-box">
+                        <h3 className="carousel-text">{eachBook.title}</h3>
+                        <p className="carousel-text">{eachBook.description}</p>
+                        <p className="carousel-text">{eachBook.status}</p>
+                      </Carousel.Caption>
+                    </div>
+                  </Carousel.Item>
+              ))}
+              </Carousel>
             </div>
-          ) : (
-            <p>no books found</p>
-          )}
-        </div>
+          ) 
+          : 
+          <p>ErrorAlert</p>
+          }
       </>
     );
   }

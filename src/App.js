@@ -1,4 +1,5 @@
 import React from 'react';
+import "./App.css";
 import Header from './Header';
 import Footer from './Footer';
 import BestBooks from './BestBooks';
@@ -8,6 +9,7 @@ import {
   Routes,
   Route
 } from "react-router-dom";
+
 
 class App extends React.Component {
   render() {
