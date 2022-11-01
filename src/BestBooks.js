@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 
-let SERVER = process.env.REACT_APP_SERVER;
+// let SERVER = process.env.REACT_APP_SERVER;
 
 class BestBooks extends React.Component {
   constructor(props) {
@@ -13,15 +13,15 @@ class BestBooks extends React.Component {
   }
 
   getBooks = async () => {
-    let url = `${SERVER}/books`;
-    // console.log(url)
+    let url = `${process.env.REACT_APP_SERVER}/books`;
+    console.log('url: ', url)
 
     try {
       let results = await axios.get(url);
-      console.log(results.data);
-      this.setState = {
+      console.log('axios results: ', results.data);
+      this.setState({
         books: results.data,
-      };
+      });
     } catch (error) {
       console.log("Error ocurred: ", error.response.data);
     }
@@ -29,6 +29,7 @@ class BestBooks extends React.Component {
 
   componentDidMount() {
     this.getBooks();
+    console.log('books after componentDidMount: ', this.state.books);
     console.log("books", this.state.books);
   }
 
@@ -37,7 +38,7 @@ class BestBooks extends React.Component {
   // Backend: http://localhost:3001/books
 
   render() {
-    console.log("state", this.state);
+    console.log("state of books", this.state);
 
     return (
       <>
@@ -47,7 +48,7 @@ class BestBooks extends React.Component {
           {this.state.books.length > 0 ? (
             <div>
               {this.state.books.map((eachBook, idx) => (
-                // console.log(book);
+                // console.log(eachBook);
                 <div key={idx}>
                   <p>{eachBook.title}</p>
                   <p>{eachBook.description}</p>
