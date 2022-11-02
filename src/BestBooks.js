@@ -47,11 +47,12 @@ class BestBooks extends React.Component {
                         src={bookImg}
                         alt={eachBook.title}
                         height= "700px"
+                        width="550px"
                       />
                       <Carousel.Caption id="carousel-text-box">
+                        <p className="carousel-text">{eachBook.status}</p>
                         <h3 className="carousel-text">{eachBook.title}</h3>
                         <p className="carousel-text">{eachBook.description}</p>
-                        <p className="carousel-text">{eachBook.status}</p>
                       </Carousel.Caption>
                     </div>
                   </Carousel.Item>

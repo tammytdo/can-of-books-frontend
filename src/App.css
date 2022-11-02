@@ -4,19 +4,21 @@
 }
 
 #carousel-image {
-  opacity: .65;
+  opacity: .55;
   max-height: 770px;
-  margin-left: 30%;
-  margin-right: 20%;
+  margin-left: 25%;
+  /* margin-right: 5%; */
 }
 
 #carousel-text-box {
-  background-color:lightgrey;
-  opacity: .6;
-  padding: 5%;
-  margin: 7%;
+  padding-top: 5%;
+  margin-top: 8%;
+  margin-left: 20%;
+  margin-right: 20%;
+  margin-bottom: 8%
 }
 
 .carousel-text {
   color: black;
+  margin-left: auto;
 }
