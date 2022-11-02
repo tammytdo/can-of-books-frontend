@@ -1,0 +1,24 @@
+#carousel {
+  max-height: 770px;
+  margin: 3%;
+}
+
+#carousel-image {
+  opacity: .55;
+  max-height: 770px;
+  margin-left: 25%;
+  /* margin-right: 5%; */
+}
+
+#carousel-text-box {
+  padding-top: 5%;
+  margin-top: 8%;
+  margin-left: 20%;
+  margin-right: 20%;
+  margin-bottom: 8%
+}
+
+.carousel-text {
+  color: black;
+  margin-left: auto;
+}
