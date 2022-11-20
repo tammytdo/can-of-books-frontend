@@ -55,24 +55,29 @@ class App extends React.Component {
     return (
       <>
         <Router>
-          <Header/>
           <Routes>
-          <Route
-              exact path="/"
-              element=
-              {this.props.auth0.isAuthenticated ? 
-            <>
-              <Profile />
-              <BestBooks
-                handleGet={this.handleGet}
-                booksData={this.state.booksData}
-                onDelete={this.onDelete}
-              />
-            </>
-            :
-            <Welcome />
-          }
-          />
+            <Route
+              exact
+              path="/"
+              element={
+                this.props.auth0.isAuthenticated ? (
+                  <>
+                    <Header />
+                    <Profile />
+                    <BestBooks
+                      handleGet={this.handleGet}
+                      booksData={this.state.booksData}
+                      onDelete={this.onDelete}
+                    />
+                  </>
+                ) : (
+                  <>
+                    <Welcome />
+                    <Login />
+                  </>
+                )
+              }
+            />
           </Routes>
           <Footer />
         </Router>

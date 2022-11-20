@@ -8,13 +8,12 @@ const Profile = () => {
   if (isLoading) {
     return <div>Loading ...</div>;
   }
-
+  
   return (
     isAuthenticated && (
       <div>
         <img src={user.picture} alt={user.name} />
-        {<h2>{user.name}</h2>}
-        {<p>{user.email}</p>}
+        {<h2>{user.email.charAt(0).toUpperCase()+user.email.slice(1)}</h2>}
       </div>
     )
   );

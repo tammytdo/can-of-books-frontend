@@ -3,6 +3,7 @@ import React from "react";
 import bookImg from "./book.jpeg";
 import Carousel from "react-bootstrap/Carousel";
 import Button from "react-bootstrap/Button";
+import { useAuth0 } from "@auth0/auth0-react";
 
 class BestBooks extends React.Component {
   constructor(props) {
@@ -13,19 +14,6 @@ class BestBooks extends React.Component {
     };
   }
 
-  // getBooks = async () => {
-  //   let url = `${process.env.REACT_APP_SERVER}/books`;
-
-  //   try {
-  //     let results = await axios.get(url);
-  //     this.setState({
-  //       books: results.data,
-  //     });
-  //   } catch (error) {
-  //     console.log("Error ocurred: ", error.response.data);
-  //   }
-  // };
-
   componentDidMount() {
     this.props.handleGet();
   }
@@ -33,14 +21,13 @@ class BestBooks extends React.Component {
   render() {
     return (
       <>
-        <h2>My Book Shelf</h2>
-
+      <h1>My Bookshelf</h1>
         {this.props.booksData.length > 0 ? (
           <div>
             <Carousel id="carousel" variant="dark">
-              {this.props.booksData.map((eachBook) => (
-                <Carousel.Item>
-                  <div key={eachBook._id}>
+              {this.props.booksData.map((eachBook, idx) => (
+                <Carousel.Item key={`book-id-${idx}`}>
+                  <div>
                     <img
                       id="carousel-image"
                       src={bookImg}

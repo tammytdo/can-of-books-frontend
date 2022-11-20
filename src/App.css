@@ -4,7 +4,7 @@
 }
 
 #carousel-image {
-  opacity: .55;
+  opacity: 0.55;
   max-height: 770px;
   margin-left: 25%;
 }
@@ -13,10 +13,26 @@
   margin-top: 2%;
   margin-left: 15%;
   margin-right: 15%;
-  margin-bottom: 8%
+  margin-bottom: 8%;
 }
 
 .carousel-text {
   color: black;
   margin-right: 18%;
+}
+
+.footer {
+  height: 100px;
+  position: fixed;
+  margin-top: auto;
+}
+
+button {
+  border: grey 1px solid;
+  /* margin: 2%; */
+}
+
+Button {
+  border: grey 1px solid;
+  width: 10%
 }
