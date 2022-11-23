@@ -1,27 +1,24 @@
 import React from "react";
-// import axios from "axios";
+import BookFormModal from "./BookFormModal";
 import bookImg from "./book.jpeg";
 import Carousel from "react-bootstrap/Carousel";
 import Button from "react-bootstrap/Button";
-import { useAuth0 } from "@auth0/auth0-react";
 
 class BestBooks extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      // books: [],
-      errorMessage: "",
-    };
-  }
-
-  componentDidMount() {
-    this.props.handleGet();
-  }
+  componentDidMount = () => {
+    try {
+      this.props.handleGet();
+    } catch (error) {
+      console.error("Error from componentDidMount: ", error);
+    }
+  };
 
   render() {
+    console.log('this.props.formState', this.props.formState)
+
     return (
       <>
-      <h1>My Bookshelf</h1>
+        <h1>My Bookshelf</h1>
         {this.props.booksData.length > 0 ? (
           <div>
             <Carousel id="carousel" variant="dark">
@@ -41,7 +38,7 @@ class BestBooks extends React.Component {
                       <p className="carousel-text">{eachBook.description}</p>
                       <Button
                         type="submit"
-                        onClick={() => this.props.onDelete(eachBook)}
+                        onClick={() => this.props.handleDelete(eachBook)}
                       >
                         DELETE
                       </Button>
@@ -50,6 +47,12 @@ class BestBooks extends React.Component {
                 </Carousel.Item>
               ))}
             </Carousel>
+            {this.props.formState === true && (
+              <BookFormModal
+                show={this.props.formState}
+              />
+            )
+            }
           </div>
         ) : (
           <p>ErrorAlert</p>
