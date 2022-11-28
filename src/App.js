@@ -4,16 +4,13 @@ import Footer from "./Footer";
 import Welcome from "./Welcome";
 import "./App.css";
 // import 'bootstrap/dist/css/bootstrap.min.css';
-// import BookFormModal from "./BookFormModal";
 import BestBooks from "./BestBooks";
 import { withAuth0 } from "@auth0/auth0-react";
 import Profile from "./Profile";
 import Login from "./Login";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import axios from "axios";
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
-import BookFormModal from "./BookFormModal";
+import UpdateBook from "./UpdateBook";
 
 let SERVER = process.env.REACT_APP_SERVER;
 
@@ -24,6 +21,7 @@ class App extends React.Component {
       booksData: [],
       selectedBook: null,
       formState: false,
+      showForm: false,
     };
   }
   
@@ -51,18 +49,41 @@ class App extends React.Component {
     this.setState({ booksData: booksDataAfterDeleted });
   };
 
-  // handleAdd = async (bookToAdd) => {
+  handleUpdate = (bookToUpdate) => {
+    this.setState({ selectedBook: bookToUpdate });
+    this.setState({ showForm: true });
+  };
 
-  // }
+  onUpdate = async (bookToUpdate) => {
+      const config = {
+        method: "put",
+        baseURL: SERVER,
+        url: `/books/${bookToUpdate._id}`,
+        data: bookToUpdate,
+      };
 
-  handleShowForm = () => {
-    this.setState({ formState: true })
-  }
+      try {
+        const response = await axios(config);
+        const updatedBook = response.data;
+        console.log('response.data', response.data);
 
+        const booksData = this.state.booksData.map((bookToUpdate) =>
+        bookToUpdate._id === updatedBook._id ? updatedBook : bookToUpdate
+        );
+        this.setState({ booksData, showForm: false });
+        console.log(booksData)
+      } catch (error) {
+        console.log(error);
+      }
+  };
+  
+    
   handleHideForm = () => {
-    this.setState({ formState: false })
+    this.setState({
+      selectedBook: null,
+      showForm: false })
   }
-
+      
   render() {
     return (
       <>
@@ -77,18 +98,19 @@ class App extends React.Component {
                   <Header />
                   <Profile />
                   <BestBooks
+                    booksData={this.state.booksData}
+                    handleUpdate={this.handleUpdate}
+                    showForm={this.state.showForm}
                     handleGet={this.handleGet} 
                     handleDelete={this.handleDelete} 
-                    booksData={this.state.booksData}
-                    formState={this.state.formState}
-                    // handleShowForm={this.state.handleShowForm} 
-                    // handleHideForm={this.state.handleHideForm} 
-                  />
-                  <Button
-                    onClick = {this.handleShowForm}
-                  >
-                    Add A Book
-                  </Button>
+                    
+                    />
+                  <UpdateBook
+                    selectedBook={this.state.selectedBook}
+                    showForm={this.state.showForm} 
+                    handleHideForm={this.handleHideForm}
+                    onUpdate={this.onUpdate}
+                  /> 
                 </>
                 // ) : (
                 //   <>
