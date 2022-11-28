@@ -1,5 +1,4 @@
 import React from "react";
-import BookFormModal from "./BookFormModal";
 import bookImg from "./book.jpeg";
 import Carousel from "react-bootstrap/Carousel";
 import Button from "react-bootstrap/Button";
@@ -14,13 +13,11 @@ class BestBooks extends React.Component {
   };
 
   render() {
-    console.log('this.props.formState', this.props.formState)
-
     return (
       <>
         <h1>My Bookshelf</h1>
         {this.props.booksData.length > 0 ? (
-          <div>
+          <>
             <Carousel id="carousel" variant="dark">
               {this.props.booksData.map((eachBook, idx) => (
                 <Carousel.Item key={`book-id-${idx}`}>
@@ -33,27 +30,30 @@ class BestBooks extends React.Component {
                       width="550px"
                     />
                     <Carousel.Caption id="carousel-text-box">
-                      <p className="carousel-text">{eachBook.status}</p>
                       <h3 className="carousel-text">{eachBook.title}</h3>
                       <p className="carousel-text">{eachBook.description}</p>
+                      <p className="carousel-text">{eachBook.status}</p>
+                      
+                      <Button
+                        type="submit"
+                        onClick={() => this.props.handleUpdate(eachBook)}
+                      >
+                        UPDATE
+                      </Button>
                       <Button
                         type="submit"
                         onClick={() => this.props.handleDelete(eachBook)}
                       >
                         DELETE
                       </Button>
+
                     </Carousel.Caption>
                   </div>
                 </Carousel.Item>
               ))}
             </Carousel>
-            {this.props.formState === true && (
-              <BookFormModal
-                show={this.props.formState}
-              />
-            )
-            }
-          </div>
+            )}
+          </>
         ) : (
           <p>ErrorAlert</p>
         )}
